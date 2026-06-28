@@ -1,0 +1,6 @@
+streamlit>=1.30
+requests>=2.31
+pandas>=2.0
+google-generativeai>=0.7
+# Optional, for PDF export of the brief:
+# markdown-pdf>=1.3

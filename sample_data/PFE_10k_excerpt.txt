@@ -1,0 +1,39 @@
+ILLUSTRATIVE SAMPLE — NOT AUTHORITATIVE. This is a synthetic excerpt for offline
+demo of the OpenLedger pipeline only. Do NOT cite these figures. Replace with the
+real SEC 10-K (tools/sec_edgar.get_10k_filing) for any actual analysis.
+
+PFIZER INC. — FORM 10-K (sample excerpt)
+
+Results of Operations — Revenues
+
+Our revenues are derived from the sale of biopharmaceutical products. The following
+discussion summarizes revenues for our principal products for the year ended
+December 31.
+
+Comirnaty contributed revenues of $11,220 million, reflecting lower demand for
+COVID-19 vaccines compared to the prior year. Comirnaty remains one of our largest
+products by revenue.
+
+Paxlovid generated revenues of $1,279 million for the year, down from prior-year
+levels as pandemic-related demand normalized.
+
+Eliquis revenues were $6,747 million, an increase driven by continued oral
+anticoagulant market growth. Eliquis is recorded under our alliance revenues with
+Bristol-Myers Squibb.
+
+Prevnar family revenues were $6,440 million, supported by adult and pediatric
+pneumococcal vaccination.
+
+Ibrance generated revenues of $4,753 million in metastatic breast cancer, with
+continued competition from other CDK 4/6 inhibitors.
+
+Vyndaqel/Vyndamax revenues grew to $3,316 million, reflecting strong uptake in
+transthyretin amyloid cardiomyopathy.
+
+Total company revenues for the year were $58,496 million.
+
+Patents and Exclusivity
+
+Certain products face loss of exclusivity over the next several years, which could
+materially affect revenues. Eliquis composition-of-matter protection and Ibrance
+exclusivity are among the key dates investors monitor.
