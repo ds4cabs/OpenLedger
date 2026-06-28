@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+.env
+.venv/
+venv/
+*.md.pdf
+openledger_brief.md
+.streamlit/secrets.toml
