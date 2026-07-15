@@ -70,10 +70,12 @@ def get_drug_pricing(drug_name):
             "ndc": row.get("NDC"),
             "ndc_description": row.get("NDC Description"),
             "nadac_per_unit": (
-            float(row.get("NADAC Per Unit"))
-            if pd.notna(row.get("NADAC Per Unit"))
+                float(row.get("NADAC Per Unit"))
+                if pd.notna(row.get("NADAC Per Unit"))
                 else None
-),
+            ),
+            "pricing_unit": row.get("Pricing Unit"), 
+ 
             "effective_date": (
                 row.get("Effective Date").strftime("%Y-%m-%d")
                 if pd.notna(row.get("Effective Date"))
@@ -84,3 +86,5 @@ def get_drug_pricing(drug_name):
         },
         "note": "Matched NADAC record by NDC Description.",
     }
+
+

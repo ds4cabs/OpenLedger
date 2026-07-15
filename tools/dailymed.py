@@ -131,19 +131,25 @@ def _get_section_text(section, namespace):
 
     return None
 
+def get_dailymed_label(drug_name):
+    """Return DailyMed metadata and important prescribing sections."""
+    label = get_label(drug_name)
 
-if __name__ == "__main__":
-    label = get_label("Eliquis")
-    print(label)
+    if not label["setid"]:
+        return {
+            **label,
+            "warning": None,
+            "indications": None,
+            "dosage": None,
+            "contraindications": None,
+            "warnings_and_precautions": None,
+        }
 
-    if label["setid"]:
-        xml = get_full_label_xml(label["setid"])
-        sections = extract_label_sections(xml)
+    xml_text = get_full_label_xml(label["setid"])
+    sections = extract_label_sections(xml_text)
 
-        for name, text in sections.items():
-            print(f"\n--- {name.upper()} ---")
+    return {
+        **label,
+        **sections,
+    }
 
-            if text:
-                print(text[:1000])
-            else:
-                print("Section text not found.")

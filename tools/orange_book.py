@@ -48,8 +48,22 @@ def get_orange_book_exclusivity(drug_name):
     query = drug_name.upper().strip()
 
     matches = orange_book[
-        orange_book["Ingredient"].str.upper().str.contains(query, na=False) |
-        orange_book["Trade_Name"].str.upper().str.contains(query, na=False)
+        orange_book["Ingredient"].str.upper().str.contains(
+            query,
+            na=False,
+            regex=False,
+        )
+        |
+        orange_book["Trade_Name"].str.upper().str.contains(
+            query,
+            na=False,
+            regex=False,
+        )
+    ]
+
+    matches = matches[
+        matches["Exclusivity_Code"].notna()
+        | matches["Exclusivity_Date"].notna()
     ]
 
     if matches.empty:

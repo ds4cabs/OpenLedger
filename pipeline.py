@@ -34,21 +34,64 @@ def build_issuer_card(ticker, use_sample=False):
     except Exception as e:
         card["errors"].append(f"openFDA: {e}")
 
-    # 3) enrich each extracted product: RxNorm cross-walk + label + (stub) exclusivity/pricing
+
+    # 3) Enrich each extracted product with RxNorm, DailyMed,
+    # Orange Book exclusivity, and NADAC pricing.
     for item in revenue:
         name = item.get("product", "")
         enriched = dict(item)
+
         try:
             enriched["rxnorm"] = rxnorm.normalize(name)
         except Exception as e:
-            enriched["rxnorm"] = {"name": name, "rxcui": None, "ingredient": None}
+            enriched["rxnorm"] = {
+                "name": name,
+                "rxcui": None,
+                "ingredient": None,
+            }
             card["errors"].append(f"RxNorm {name}: {e}")
+
+        ingredient = enriched["rxnorm"].get("ingredient")
+        orange_book_lookup = ingredient or name
+
         try:
-            enriched["label"] = dailymed.get_label(name)
-        except Exception:
-            enriched["label"] = {"drug": name, "setid": None}
-        enriched["exclusivity"] = orange_book.get_orange_book_exclusivity(name)
-        enriched["pricing"] = nadac.get_pricing(name)
+            enriched["label"] = dailymed.get_dailymed_label(name)
+        except Exception as e:
+            enriched["label"] = {
+                "drug": name,
+                "setid": None,
+                "title": None,
+                "url": None,
+                "warning": None,
+                "indications": None,
+                "dosage": None,
+                "contraindications": None,
+                "warnings_and_precautions": None,
+            }
+            card["errors"].append(f"DailyMed {name}: {e}")
+
+        try:
+            enriched["exclusivity"] = (
+                orange_book.get_orange_book_exclusivity(orange_book_lookup)
+            )
+        except Exception as e:
+            enriched["exclusivity"] = {
+                "drug": name,
+                "exclusivity": [],
+                "note": "Orange Book lookup failed.",
+            }
+            card["errors"].append(f"Orange Book {name}: {e}")
+
+        try:
+            enriched["pricing"] = nadac.get_drug_pricing(name)
+        except Exception as e:
+            enriched["pricing"] = {
+                "drug": name,
+                "pricing": None,
+                "note": "NADAC lookup failed.",
+            }
+            card["errors"].append(f"NADAC {name}: {e}")
+
         card["products"].append(enriched)
 
     return card
