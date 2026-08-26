@@ -1,5 +1,10 @@
-"""OpenLedger database wrappers (one module per public source).
+"""OpenLedger database wrappers for public data sources.
 
-Implemented (real APIs):  sec_edgar, drugs_fda, rxnorm, dailymed
-Stubbed (TODO for Shawn):  orange_book, nadac   -- no clean REST API; see each file.
+Implemented:
+- SEC EDGAR
+- openFDA / Drugs@FDA
+- RxNorm
+- DailyMed
+- FDA Orange Book
+- CMS NADAC
 """

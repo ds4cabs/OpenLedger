@@ -7,7 +7,7 @@ import os
 
 # SEC requires a descriptive User-Agent with real contact info, and rate-limits
 # to ~10 req/sec. See https://www.sec.gov/os/webmaster-faq#developers
-SEC_USER_AGENT = os.environ.get("SEC_USER_AGENT", "OpenLedger-CABS contact@example.com")
+SEC_USER_AGENT = os.environ.get("SEC_USER_AGENT", "OpenLedger-CABS spphan@dons.usfca.edu")
 
 # PoC issuer universe. Pfizer is the reference issuer (start here); the rest are
 # wired but you should verify each CIK / sponsor string as you expand.
@@ -21,6 +21,6 @@ ISSUERS = {
 
 # Gemini is OPTIONAL. If GEMINI_API_KEY is unset, the app falls back to a
 # deterministic (regex) extractor so it still runs for demos / first run.
-GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-2.5-flash")
+GEMINI_MODEL = os.environ.get("GEMINI_MODEL", "gemini-3.1-flash-lite")
 
 TOP_N_PRODUCTS = 3
