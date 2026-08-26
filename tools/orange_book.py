@@ -43,22 +43,41 @@ def _load_orange_book():
 
 
 def get_orange_book_exclusivity(drug_name):
-    """Return Orange Book exclusivity records for a drug by ingredient or trade name."""
+    """
+    Return Orange Book exclusivity records for a drug by exact
+    ingredient or trade-name match.
+    """
     orange_book = _load_orange_book()
-    query = drug_name.upper().strip()
+
+    normalized_query = str(
+        drug_name or ""
+    ).strip().casefold()
+
+    if not normalized_query:
+        return {
+            "drug": drug_name,
+            "exclusivity": [],
+            "note": "No Orange Book match found.",
+        }
+
+    ingredient_matches = (
+        orange_book["Ingredient"]
+        .fillna("")
+        .str.strip()
+        .str.casefold()
+        == normalized_query
+    )
+
+    trade_name_matches = (
+        orange_book["Trade_Name"]
+        .fillna("")
+        .str.strip()
+        .str.casefold()
+        == normalized_query
+    )
 
     matches = orange_book[
-        orange_book["Ingredient"].str.upper().str.contains(
-            query,
-            na=False,
-            regex=False,
-        )
-        |
-        orange_book["Trade_Name"].str.upper().str.contains(
-            query,
-            na=False,
-            regex=False,
-        )
+        ingredient_matches | trade_name_matches
     ]
 
     matches = matches[
@@ -83,10 +102,15 @@ def get_orange_book_exclusivity(drug_name):
             "Exclusivity_Code",
             "Exclusivity_Date",
         ]
-    ].drop_duplicates().to_dict(orient="records")
+    ].drop_duplicates().to_dict(
+        orient="records"
+    )
 
     return {
         "drug": drug_name,
         "exclusivity": records,
-        "note": "Matched Orange Book records by ingredient or trade name.",
+        "note": (
+            "Matched Orange Book records by exact "
+            "ingredient or trade name."
+        ),
     }
